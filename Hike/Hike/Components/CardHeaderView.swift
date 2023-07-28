@@ -9,6 +9,8 @@ import SwiftUI
 import UIKit
 
 struct CardHeaderView: View {
+    @State private var isShowingSheet: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
@@ -30,6 +32,9 @@ struct CardHeaderView: View {
                 
                 Button {
                     // Some action
+                    print("Button pressed")
+                    isShowingSheet.toggle()
+                    
                 } label: {
                     CircleButton(
                         backgroundColors: [
@@ -39,6 +44,11 @@ struct CardHeaderView: View {
                         ],
                         icon: "figure.hiking"
                     )
+                }
+                .sheet(isPresented: $isShowingSheet) {
+                    SettingsView()
+                        .presentationDragIndicator(.visible) // indicator that shows the possibility of draging the sheet up or down
+                        .presentationDetents([.medium, .large]) // defines the positions that sheet will ocupy, medium is half of screen and lare is almost entire screen
                 }
             }
             
